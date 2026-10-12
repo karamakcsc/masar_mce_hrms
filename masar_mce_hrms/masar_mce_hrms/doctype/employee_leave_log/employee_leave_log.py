@@ -1,4 +1,4 @@
-from masar_mce_hrms.historical_log import HistoricalLog
+from masar_mce_hrms.services.historical_log import HistoricalLog
 
 
 class EmployeeLeaveLog(HistoricalLog):

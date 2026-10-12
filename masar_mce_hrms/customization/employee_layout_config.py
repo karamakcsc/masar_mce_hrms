@@ -65,7 +65,7 @@ TABS = {
     ],
     "personal_details": [
         ("custom_mce_layout_identity", "column_break6", [
-            ["custom_national_number", "date_of_birth", "custom_agg", "custom_mce_place_of_birth"],
+            ["custom_national_number", "date_of_birth", "custom_age", "custom_mce_place_of_birth"],
             ["custom_mothers_name", "custom_nationality", "custom_religion", "custom_mce_education_level"],
         ]),
         ("custom_mce_personal_service_section", "custom_mce_layout_family_column", [["marital_status", "family_background"], ["current_address"]]),

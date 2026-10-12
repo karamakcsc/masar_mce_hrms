@@ -1,8 +1,8 @@
-"""Transactional verification: bench --site mce.local execute masar_mce_hrms.verify.run."""
+"""Transactional verification: bench --site mce.local execute masar_mce_hrms.tests.verification.run."""
 
 import frappe
 
-from masar_mce_hrms.setup import RETIRED_FIELDS, employee_fields, setup_employee_fields
+from masar_mce_hrms.customization.setup import RETIRED_FIELDS, employee_fields, setup_employee_fields
 
 
 def run():
@@ -16,7 +16,7 @@ def run():
         assert before == after, "Repeated setup changed Employee metadata"
         definitions = employee_fields()
         names = [f.fieldname for f in meta.fields]
-        from masar_mce_hrms.employee_layout import GROUPS, ATTACHMENTS, tab_membership
+        from masar_mce_hrms.customization.employee_layout import GROUPS, ATTACHMENTS, tab_membership
         membership = tab_membership(meta)
         assert len(names) == len(set(names))
         assert meta.get_field("custom_mce_service_details_tab").hidden
@@ -28,7 +28,7 @@ def run():
             field = meta.get_field(fieldname)
             if field:
                 assert field.hidden and field.read_only
-        assert meta.get_field("custom_agg").fieldtype == "Int"
+        assert meta.get_field("custom_age").fieldtype == "Int"
         assert meta.get_field("custom_height").fieldtype == "Float"
         assert meta.get_field("custom_weight").fieldtype == "Float"
         assert meta.get_field("custom_classification").fieldtype == "Data"
@@ -37,7 +37,7 @@ def run():
         assert meta.get_field("custom_mce_attached_from") and meta.get_field("custom_mce_attached_to")
         employee = frappe.db.get_value("Employee", {}, "name")
         assert employee, "An existing Employee is required for verification"
-        from masar_mce_hrms.verify_logs import run as verify_logs
+        from masar_mce_hrms.tests.logs import run as verify_logs
         verify_logs()
         dashboard = meta.get_dashboard_data()
         items = [item for group in dashboard.transactions for item in group["items"]]
@@ -51,10 +51,10 @@ def run():
 def verify_employee_validation():
     from unittest.mock import patch
     from hrms.overrides.employee_master import EmployeeMaster
-    from masar_mce_hrms.employee import MCEEmployee
-    from masar_mce_hrms.setup import preflight_numeric_fields
+    from masar_mce_hrms.overrides.employee import MCEEmployee
+    from masar_mce_hrms.customization.setup import preflight_numeric_fields
 
-    with patch("masar_mce_hrms.setup.frappe.get_all", return_value=[frappe._dict(name="invalid-test", custom_agg="jgjh", custom_height="155gh", custom_weight="12jhg")]):
+    with patch("masar_mce_hrms.customization.setup.frappe.get_all", return_value=[frappe._dict(name="invalid-test", custom_age="jgjh", custom_height="155gh", custom_weight="12jhg")]):
         expect_validation_error(preflight_numeric_fields)
 
     doc = frappe.get_doc({"doctype": "Employee", "first_name": " Ahmad ", "middle_name": " Ali ", "custom_third_name": " Hasan ", "last_name": " Saleh "})
@@ -71,12 +71,12 @@ def verify_employee_validation():
     doc.set_employee_name()
     assert doc.employee_name == "\u0623\u062d\u0645\u062f \u0639\u0644\u064a \u062d\u0633\u0646 \u0635\u0627\u0644\u062d"
     doc.run_method("before_validate")
-    for fieldname, valid in (("custom_agg", 30), ("custom_height", 175.5), ("custom_weight", 72.25)):
+    for fieldname, valid in (("custom_age", 30), ("custom_height", 175.5), ("custom_weight", 72.25)):
         doc.set(fieldname, valid)
     doc.run_method("before_validate")
-    for fieldname in ("custom_agg", "custom_height", "custom_weight", "custom_mce_salary_at_appointment"):
+    for fieldname in ("custom_age", "custom_height", "custom_weight", "custom_mce_salary_at_appointment"):
         original = doc.get(fieldname)
-        for invalid in ("not numeric", -1, "NaN", "Infinity", *([1.5] if fieldname == "custom_agg" else [])):
+        for invalid in ("not numeric", -1, "NaN", "Infinity", *([1.5] if fieldname == "custom_age" else [])):
             doc.set(fieldname, invalid)
             expect_validation_error(lambda: doc.run_method("before_validate"))
         doc.set(fieldname, original)
@@ -101,10 +101,10 @@ def verify_employee_validation():
     saved.last_name = "Saleh"
     saved.custom_height = 175.5
     saved.custom_weight = 72.25
-    saved.custom_agg = 30
+    saved.custom_age = 30
     saved.save(ignore_permissions=True)
     assert saved.employee_name == "Ahmad Ali Hasan Saleh"
-    saved.custom_agg = 30.5
+    saved.custom_age = 30.5
     expect_validation_error(lambda: saved.save(ignore_permissions=True))
 
 

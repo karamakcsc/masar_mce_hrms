@@ -1,5 +1,3 @@
-import json
-
 import frappe
 from decimal import Decimal, InvalidOperation
 from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
@@ -54,7 +52,6 @@ def employee_fields():
 
 def setup_employee_fields():
     preflight_numeric_fields()
-    normalize_numeric_storage()
     fields = employee_fields()
     owned = {field["fieldname"] for field in fields}
     retired = RETIRED_FIELDS
@@ -82,7 +79,7 @@ def setup_employee_fields():
             field.save(ignore_permissions=True)
     for fieldname, fieldtype in NUMERIC_TYPES.items():
         update_custom_field(fieldname, fieldtype=fieldtype)
-    from masar_mce_hrms.employee_behaviour import setup_behaviour
+    from masar_mce_hrms.customization.options import setup_behaviour
     setup_behaviour()
     update_custom_field("custom_classification", label="Medical Classification", fieldtype="Data", options="")
     if frappe.get_meta("Employee").get_field("employment_type").label != "Military Classification":
@@ -90,7 +87,7 @@ def setup_employee_fields():
     frappe.clear_cache(doctype="Employee")
     from frappe.core.doctype.doctype.doctype import validate_fields_for_doctype
     validate_fields_for_doctype("Employee")
-    from masar_mce_hrms.employee_layout import apply_layout
+    from masar_mce_hrms.customization.employee_layout import apply_layout
     apply_layout()
 
 
@@ -98,10 +95,13 @@ RETIRED_FIELDS = {
     "custom_mce_service_type", "custom_mce_health_status", "custom_mce_attachment_location",
     "custom_mce_recruitment_source", "custom_mce_decision_number", "custom_mce_decision_date",
 }
-NUMERIC_TYPES = {"custom_agg": "Int", "custom_height": "Float", "custom_weight": "Float"}
+NUMERIC_TYPES = {"custom_age": "Int", "custom_height": "Float", "custom_weight": "Float"}
 
 
 def preflight_numeric_fields():
+    missing = [name for name in NUMERIC_TYPES if not frappe.db.has_column("Employee", name)]
+    if missing:
+        frappe.throw("Employee schema is missing required fields after fixture synchronization: " + ", ".join(missing))
     invalid = []
     for row in frappe.get_all("Employee", fields=["name", *NUMERIC_TYPES]):
         for fieldname, fieldtype in NUMERIC_TYPES.items():
@@ -125,14 +125,5 @@ def update_custom_field(fieldname, **changes):
         frappe.throw(f"Expected Employee Custom Field {fieldname} is missing")
     field = frappe.get_doc("Custom Field", name)
     if any(field.get(key) != value for key, value in changes.items()):
-        if fieldname in NUMERIC_TYPES and field.fieldtype == "Data" and changes.get("fieldtype") == NUMERIC_TYPES[fieldname]:
-            # The preflight above establishes that this normally blocked conversion is safe.
-            field.flags.ignore_validate = True
         field.update(changes)
         field.save(ignore_permissions=True)
-
-
-def normalize_numeric_storage():
-    # Frappe numeric columns use zero for unset values, rather than empty strings.
-    for fieldname in NUMERIC_TYPES:
-        frappe.db.sql(f"UPDATE `tabEmployee` SET `{fieldname}` = 0 WHERE `{fieldname}` IS NULL OR TRIM(`{fieldname}`) = ''")

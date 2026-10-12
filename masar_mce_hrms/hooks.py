@@ -5,13 +5,16 @@ app_description = "Masar MCE HRMS"
 app_email = "info@kcsc.com.jo"
 app_license = "mit"
 
-after_install = "masar_mce_hrms.setup.setup_employee_fields"
-after_migrate = "masar_mce_hrms.setup.setup_employee_fields"
-override_doctype_dashboards = {"Employee": "masar_mce_hrms.dashboard.employee_dashboard"}
-override_doctype_class = {"Employee": "masar_mce_hrms.employee.MCEEmployee"}
+required_apps = ["erpnext", "hrms"]
+before_install = "masar_mce_hrms.patches.rename_employee_age.execute"
+before_migrate = "masar_mce_hrms.patches.rename_employee_age.execute"
+after_sync = "masar_mce_hrms.customization.setup.setup_employee_fields"
+after_migrate = "masar_mce_hrms.customization.setup.setup_employee_fields"
+override_doctype_dashboards = {"Employee": "masar_mce_hrms.dashboards.employee.employee_dashboard"}
+override_doctype_class = {"Employee": "masar_mce_hrms.overrides.employee.MCEEmployee"}
 doctype_js = {"Employee": "public/js/employee.js"}
-doc_events = {"Employee": {"on_update": "masar_mce_hrms.log_snapshots.capture_employee_changes"}}
-scheduler_events = {"daily": ["masar_mce_hrms.employee_behaviour.refresh_durations"]}
+doc_events = {"Employee": {"on_update": "masar_mce_hrms.services.log_snapshots.capture_employee_changes"}}
+scheduler_events = {"daily": ["masar_mce_hrms.services.service_duration.refresh_durations"]}
 
 # Apps
 # ------------------
@@ -256,6 +259,7 @@ scheduler_events = {"daily": ["masar_mce_hrms.employee_behaviour.refresh_duratio
 # ignore_translatable_strings_from = []
 
 fixtures = [
+    {"dt": "DocType", "filters": [["name", "=", "Penalties"]]},
     {"dt": "Custom Field", "filters": [
         [
             "dt", "in", [

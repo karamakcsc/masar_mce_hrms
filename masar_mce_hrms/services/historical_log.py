@@ -6,7 +6,7 @@ from frappe.utils import getdate
 
 class HistoricalLog(Document):
     def validate(self):
-        from masar_mce_hrms.log_snapshots import AUTOMATIC_LOG_TOKEN
+        from masar_mce_hrms.services.log_snapshots import AUTOMATIC_LOG_TOKEN
 
         if not self.is_new():
             frappe.throw(_("Historical log records are read-only."))

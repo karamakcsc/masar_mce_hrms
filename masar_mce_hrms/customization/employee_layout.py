@@ -17,7 +17,7 @@ GROUPS = {
     "personal_details": [
         "custom_national_number", "date_of_birth", "custom_mce_place_of_birth", "custom_height",
         "custom_weight", "custom_eye_color", "column_break6", "custom_mothers_name", "custom_nationality",
-        "custom_religion", "current_address", "custom_agg", "blood_group", "marital_status",
+        "custom_religion", "current_address", "custom_age", "blood_group", "marital_status",
         "cell_number", "custom_mce_education_level", "custom_mce_alternative_phone_number",
     ],
     "employment_details": [
@@ -58,7 +58,7 @@ def set_layout_property(fieldname, property_name, value, property_type="Check"):
 
 def apply_layout():
     from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
-    from masar_mce_hrms.employee_layout_config import SECTIONS, TABS
+    from masar_mce_hrms.customization.employee_layout_config import SECTIONS, TABS
 
     meta = frappe.get_meta("Employee")
     original_tabs = tab_membership(meta)
@@ -126,7 +126,7 @@ def employee_digest():
 
 
 def apply_and_verify():
-    from masar_mce_hrms.employee_layout_config import TABS
+    from masar_mce_hrms.customization.employee_layout_config import TABS
 
     before = frappe.get_meta("Employee")
     layout_types = ("Tab Break", "Section Break", "Column Break")

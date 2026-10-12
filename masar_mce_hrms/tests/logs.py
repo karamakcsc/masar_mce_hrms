@@ -2,7 +2,7 @@
 
 import frappe
 
-from masar_mce_hrms.log_snapshots import LOG_DOCTYPES, SHARED_FIELDS
+from masar_mce_hrms.services.log_snapshots import LOG_DOCTYPES, SHARED_FIELDS
 
 
 def run():

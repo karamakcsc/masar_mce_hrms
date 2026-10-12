@@ -16,7 +16,7 @@ class MCEEmployee(EmployeeMaster):
 
     def before_validate(self):
         self.validate_mce_fields()
-        from masar_mce_hrms.employee_behaviour import calculate_durations
+        from masar_mce_hrms.services.service_duration import calculate_durations
         calculate_durations(self)
         previous = self.get_doc_before_save()
         if previous:
@@ -24,14 +24,16 @@ class MCEEmployee(EmployeeMaster):
 
     def before_insert(self):
         from frappe.model.naming import getseries
+        maximum = frappe.db.sql("SELECT COALESCE(MAX(custom_mce_employee_sequence_number),0) FROM `tabEmployee`")[0][0]
+        frappe.db.sql("INSERT INTO `tabSeries` (name,current) VALUES (%s,%s) ON DUPLICATE KEY UPDATE current=GREATEST(current,VALUES(current))", ("MCE-EMPLOYEE-SEQUENCE", maximum))
         self.custom_mce_employee_sequence_number = int(getseries("MCE-EMPLOYEE-SEQUENCE", 1))
 
     def onload(self):
-        from masar_mce_hrms.employee_behaviour import calculate_durations
+        from masar_mce_hrms.services.service_duration import calculate_durations
         calculate_durations(self)
 
     def validate_mce_fields(self):
-        for fieldname in ("custom_agg", "custom_height", "custom_weight", "custom_mce_salary_at_appointment"):
+        for fieldname in ("custom_age", "custom_height", "custom_weight", "custom_mce_salary_at_appointment"):
             value = self.get(fieldname)
             if value is None or not str(value).strip():
                 continue
@@ -39,8 +41,8 @@ class MCEEmployee(EmployeeMaster):
                 number = Decimal(str(value).strip())
             except InvalidOperation:
                 number = Decimal("NaN")
-            if not number.is_finite() or number < 0 or (fieldname == "custom_agg" and number != number.to_integral_value()):
-                frappe.throw(_("{0} must be a non-negative {1}.").format(self.meta.get_label(fieldname), _("whole number") if fieldname == "custom_agg" else _("number")))
+            if not number.is_finite() or number < 0 or (fieldname == "custom_age" and number != number.to_integral_value()):
+                frappe.throw(_("{0} must be a non-negative {1}.").format(self.meta.get_label(fieldname), _("whole number") if fieldname == "custom_age" else _("number")))
         for earlier, later in (
             ("custom_mce_attachment_date", "custom_mce_attachment_end_date"),
             ("custom_mce_release_date", "custom_mce_service_reinstatement_date"),
