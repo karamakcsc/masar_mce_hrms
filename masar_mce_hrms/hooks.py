@@ -5,6 +5,14 @@ app_description = "Masar MCE HRMS"
 app_email = "info@kcsc.com.jo"
 app_license = "mit"
 
+after_install = "masar_mce_hrms.setup.setup_employee_fields"
+after_migrate = "masar_mce_hrms.setup.setup_employee_fields"
+override_doctype_dashboards = {"Employee": "masar_mce_hrms.dashboard.employee_dashboard"}
+override_doctype_class = {"Employee": "masar_mce_hrms.employee.MCEEmployee"}
+doctype_js = {"Employee": "public/js/employee.js"}
+doc_events = {"Employee": {"on_update": "masar_mce_hrms.log_snapshots.capture_employee_changes"}}
+scheduler_events = {"daily": ["masar_mce_hrms.employee_behaviour.refresh_durations"]}
+
 # Apps
 # ------------------
 
@@ -247,3 +255,25 @@ app_license = "mit"
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
 
+fixtures = [
+    {"dt": "Custom Field", "filters": [
+        [
+            "dt", "in", [
+                'Employee',
+                
+            ]
+        ]
+    ]},
+    {
+        "doctype": "Property Setter",
+        "filters": [
+            [
+                "doc_type",
+                "in",
+                [
+                    'Employee'
+                ]
+            ]
+        ]
+    }
+]

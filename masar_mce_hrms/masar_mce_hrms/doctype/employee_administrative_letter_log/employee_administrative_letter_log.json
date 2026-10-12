@@ -1,0 +1,191 @@
+{
+  "doctype": "DocType",
+  "name": "Employee Administrative Letter Log",
+  "module": "Masar MCE HRMS",
+  "autoname": "format:MCE-LETTER-{#####}",
+  "engine": "InnoDB",
+  "is_submittable": 0,
+  "track_changes": 1,
+  "field_order": [
+    "employee",
+    "category",
+    "employee_number",
+    "employee_name",
+    "english_name",
+    "letter_type",
+    "letter_number",
+    "letter_date",
+    "transfer_branch",
+    "code",
+    "result",
+    "number_of_days",
+    "notes",
+    "other_information",
+    "transfer_type",
+    "penalty",
+    "penalty_days"
+  ],
+  "fields": [
+    {
+      "fieldname": "employee",
+      "label": "Employee",
+      "fieldtype": "Link",
+      "options": "Employee",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "read_only": 1
+    },
+    {
+      "fieldname": "employee_name",
+      "label": "Arabic Name",
+      "fieldtype": "Data",
+      "read_only": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "letter_type",
+      "label": "Letter Type",
+      "fieldtype": "Data",
+      "read_only": 1
+    },
+    {
+      "fieldname": "letter_number",
+      "label": "Letter Number",
+      "fieldtype": "Data",
+      "read_only": 1
+    },
+    {
+      "fieldname": "letter_date",
+      "label": "Letter Date",
+      "fieldtype": "Date",
+      "read_only": 1
+    },
+    {
+      "fieldname": "transfer_type",
+      "label": "Transfer Type",
+      "fieldtype": "Data",
+      "read_only": 1,
+      "hidden": 1
+    },
+    {
+      "fieldname": "penalty",
+      "label": "Penalty",
+      "fieldtype": "Data",
+      "read_only": 1,
+      "hidden": 1
+    },
+    {
+      "fieldname": "penalty_days",
+      "label": "Days",
+      "fieldtype": "Int",
+      "read_only": 1,
+      "hidden": 1
+    },
+    {
+      "fieldname": "number_of_days",
+      "label": "Number of Days",
+      "fieldtype": "Int",
+      "read_only": 1
+    },
+    {
+      "fieldname": "notes",
+      "label": "Notes",
+      "fieldtype": "Small Text",
+      "read_only": 1
+    },
+    {
+      "fieldname": "other_information",
+      "label": "Other Information",
+      "fieldtype": "Small Text",
+      "read_only": 1
+    },
+    {
+      "fieldname": "category",
+      "label": "Category",
+      "fieldtype": "Data",
+      "read_only": 1
+    },
+    {
+      "fieldname": "employee_number",
+      "label": "Military Number",
+      "fieldtype": "Data",
+      "read_only": 1
+    },
+    {
+      "fieldname": "english_name",
+      "label": "English Name",
+      "fieldtype": "Data",
+      "read_only": 1
+    },
+    {
+      "fieldname": "transfer_branch",
+      "label": "Transfer Branch",
+      "fieldtype": "Data",
+      "read_only": 1
+    },
+    {
+      "fieldname": "code",
+      "label": "Code",
+      "fieldtype": "Data",
+      "read_only": 1
+    },
+    {
+      "fieldname": "result",
+      "label": "Result",
+      "fieldtype": "Data",
+      "read_only": 1
+    }
+  ],
+  "permissions": [
+    {
+      "role": "HR Manager",
+      "read": 1,
+      "create": 0,
+      "write": 0,
+      "report": 1,
+      "export": 1,
+      "print": 1,
+      "email": 1,
+      "share": 0,
+      "delete": 0,
+      "submit": 0,
+      "cancel": 0,
+      "amend": 0
+    },
+    {
+      "role": "HR User",
+      "read": 1,
+      "create": 0,
+      "write": 0,
+      "report": 1,
+      "export": 1,
+      "print": 1,
+      "email": 1,
+      "share": 0,
+      "delete": 0,
+      "submit": 0,
+      "cancel": 0,
+      "amend": 0
+    },
+    {
+      "role": "System Manager",
+      "read": 1,
+      "create": 0,
+      "write": 0,
+      "report": 1,
+      "export": 1,
+      "print": 1,
+      "email": 1,
+      "share": 0,
+      "delete": 0,
+      "submit": 0,
+      "cancel": 0,
+      "amend": 0
+    }
+  ],
+  "sort_field": "creation",
+  "sort_order": "DESC",
+  "title_field": "employee_name",
+  "search_fields": "employee,employee_name"
+}

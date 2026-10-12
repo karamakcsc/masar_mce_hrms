@@ -1,0 +1,222 @@
+{
+  "actions": [],
+  "autoname": "format:MCE-LEAVE-{#####}",
+  "creation": "2026-10-08 18:03:03.368206",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "employee",
+    "category",
+    "employee_number",
+    "employee_name",
+    "annual_leave_balance",
+    "sick_leave_balance",
+    "casual_leave_balance",
+    "leave_overrun",
+    "leave_type",
+    "request_date",
+    "start_date",
+    "end_date",
+    "leave_duration",
+    "paid_leave",
+    "address_during_leave",
+    "notes",
+    "column_break_grpo",
+    "annual_leave",
+    "travel_during_leave",
+    "project",
+    "creation_date"
+  ],
+  "fields": [
+    {
+      "fieldname": "employee",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "Employee",
+      "options": "Employee",
+      "reqd": 1,
+      "read_only": 1
+    },
+    {
+      "fieldname": "employee_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Arabic Name",
+      "read_only": 1
+    },
+    {
+      "fieldname": "start_date",
+      "fieldtype": "Date",
+      "label": "Start Date",
+      "read_only": 1
+    },
+    {
+      "fieldname": "end_date",
+      "fieldtype": "Date",
+      "label": "End Date",
+      "read_only": 1
+    },
+    {
+      "fieldname": "request_date",
+      "fieldtype": "Date",
+      "label": "Request Date",
+      "read_only": 1
+    },
+    {
+      "fieldname": "leave_duration",
+      "fieldtype": "Int",
+      "label": "Leave Duration",
+      "read_only": 1
+    },
+    {
+      "default": "0",
+      "fieldname": "annual_leave",
+      "fieldtype": "Check",
+      "label": "Annual Leave",
+      "read_only": 1,
+      "hidden": 1
+    },
+    {
+      "fieldname": "travel_during_leave",
+      "fieldtype": "Data",
+      "label": "Travel During Leave",
+      "read_only": 1,
+      "hidden": 1
+    },
+    {
+      "fieldname": "project",
+      "fieldtype": "Data",
+      "label": "Project",
+      "read_only": 1,
+      "hidden": 1
+    },
+    {
+      "fieldname": "creation_date",
+      "fieldtype": "Date",
+      "hidden": 1,
+      "label": "Legacy Creation Date",
+      "read_only": 1
+    },
+    {
+      "fieldname": "column_break_grpo",
+      "fieldtype": "Column Break",
+      "read_only": 1
+    },
+    {
+      "fieldname": "category",
+      "label": "Category",
+      "fieldtype": "Data",
+      "read_only": 1
+    },
+    {
+      "fieldname": "employee_number",
+      "label": "Employee Number",
+      "fieldtype": "Data",
+      "read_only": 1
+    },
+    {
+      "fieldname": "annual_leave_balance",
+      "label": "Annual Leave Balance",
+      "fieldtype": "Float",
+      "read_only": 1
+    },
+    {
+      "fieldname": "sick_leave_balance",
+      "label": "Sick Leave Balance",
+      "fieldtype": "Float",
+      "read_only": 1
+    },
+    {
+      "fieldname": "casual_leave_balance",
+      "label": "Casual Leave Balance",
+      "fieldtype": "Float",
+      "read_only": 1
+    },
+    {
+      "fieldname": "leave_overrun",
+      "label": "Leave Overrun",
+      "fieldtype": "Data",
+      "read_only": 1
+    },
+    {
+      "fieldname": "leave_type",
+      "label": "Leave Type",
+      "fieldtype": "Data",
+      "read_only": 1
+    },
+    {
+      "fieldname": "paid_leave",
+      "label": "Paid Leave?",
+      "fieldtype": "Check",
+      "read_only": 1
+    },
+    {
+      "fieldname": "address_during_leave",
+      "label": "Address During Leave",
+      "fieldtype": "Small Text",
+      "read_only": 1
+    },
+    {
+      "fieldname": "notes",
+      "label": "Notes",
+      "fieldtype": "Small Text",
+      "read_only": 1
+    }
+  ],
+  "links": [],
+  "modified": "2026-10-11 10:07:22.529174",
+  "modified_by": "Administrator",
+  "module": "Masar MCE HRMS",
+  "name": "Employee Leave Log",
+  "naming_rule": "Expression (old style)",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 0,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "HR Manager",
+      "write": 0,
+      "delete": 0,
+      "cancel": 0,
+      "submit": 0
+    },
+    {
+      "create": 0,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "HR User",
+      "write": 0,
+      "delete": 0,
+      "cancel": 0,
+      "submit": 0
+    },
+    {
+      "create": 0,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "write": 0,
+      "delete": 0,
+      "cancel": 0,
+      "submit": 0
+    }
+  ],
+  "row_format": "Dynamic",
+  "search_fields": "employee,employee_name",
+  "sort_field": "creation",
+  "sort_order": "DESC",
+  "states": [],
+  "title_field": "employee_name",
+  "track_changes": 1
+}
