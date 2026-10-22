@@ -137,24 +137,24 @@ app_license = "mit"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Employee": {
+		"validate": "masar_mce_hrms.custom.employee.employee.validate",
+		"on_update": "masar_mce_hrms.custom.employee.employee.on_update",
+		"before_insert": "masar_mce_hrms.custom.employee.employee.before_insert",
+	}
+}
 
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
+scheduler_events = {
 # 	"all": [
 # 		"masar_mce_hrms.tasks.all"
 # 	],
-# 	"daily": [
-# 		"masar_mce_hrms.tasks.daily"
-# 	],
+	"daily": [
+		"masar_mce_hrms.tasks.enqueue_daily_update"
+	],
 # 	"hourly": [
 # 		"masar_mce_hrms.tasks.hourly"
 # 	],
@@ -164,7 +164,7 @@ app_license = "mit"
 # 	"monthly": [
 # 		"masar_mce_hrms.tasks.monthly"
 # 	],
-# }
+}
 
 # Testing
 # -------
@@ -181,9 +181,9 @@ app_license = "mit"
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
 # along with any modifications made in other Frappe apps
-# override_doctype_dashboards = {
-# 	"Task": "masar_mce_hrms.task.get_dashboard_data"
-# }
+override_doctype_dashboards = {
+	"Employee": "masar_mce_hrms.custom.employee.employee_dashboard.employee_dashboard"
+}
 
 # exempt linked doctypes from being automatically cancelled
 #
@@ -247,3 +247,99 @@ app_license = "mit"
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
 
+fixtures = [
+    {"dt": "Custom Field", "filters": [
+        [
+            "name", "in", [
+				'Employee-custom_age',
+				'Employee-custom_appointed_position',
+				'Employee-custom_appointment_certificate_number',
+				'Employee-custom_column_break_3wxke',
+				'Employee-custom_column_break_5gjk2',
+				'Employee-custom_column_break_6asf5',
+				'Employee-custom_column_break_7qdn3',
+				'Employee-custom_column_break_b86ig',
+				'Employee-custom_column_break_exksu',
+				'Employee-custom_column_break_hjra8',
+				'Employee-custom_column_break_pdoag',
+				'Employee-custom_column_break_qylpq',
+				'Employee-custom_column_break_si0jf',
+				'Employee-custom_dailywage_service_duration',
+				'Employee-custom_date_of_appointment',
+				'Employee-custom_date_of_appointment_as_daily_worker',
+				'Employee-custom_decisions_and_attachments',
+				'Employee-custom_department_classification',
+				'Employee-custom_educational_attainment',
+				'Employee-custom_employee_service_status',
+				'Employee-custom_enlistment_date',
+				'Employee-custom_eye_color',
+				'Employee-custom_height',
+				'Employee-custom_identity_and_background',
+				'Employee-custom_is_market_department',
+				'Employee-custom_is_seconded',
+				'Employee-custom_is_staff_officer',
+				'Employee-custom_mce_employee_sequence_number',
+				'Employee-custom_medical_classification',
+				'Employee-custom_military_classification',
+				'Employee-custom_military_status',
+				'Employee-custom_mothers_name',
+				'Employee-custom_national_number',
+				'Employee-custom_nationality',
+				'Employee-custom_notes',
+				'Employee-custom_place_of_birth',
+				'Employee-custom_promotion_date_to_current_rank',
+				'Employee-custom_rank_upon_appointment',
+				'Employee-custom_reason_for_leaving_work',
+				'Employee-custom_reinstatement_date',
+				'Employee-custom_reinstatement_letter_number',
+				'Employee-custom_religion',
+				'Employee-custom_remarks',
+				'Employee-custom_seconded_from',
+				'Employee-custom_seconded_to',
+				'Employee-custom_secondment_date',
+				'Employee-custom_secondment_end_date',
+				'Employee-custom_secondment_letter_number',
+				'Employee-custom_section_break_39btp',
+				'Employee-custom_section_break_7gns3',
+				'Employee-custom_section_break_ei0vo',
+				'Employee-custom_section_break_j8tos',
+				'Employee-custom_section_break_k0pca',
+				'Employee-custom_section_break_kpjdd',
+				'Employee-custom_section_break_q2edo',
+				'Employee-custom_section_break_wnjja',
+				'Employee-custom_section_break_y9unf',
+				'Employee-custom_section_break_ylvsa',
+				'Employee-custom_service_duration',
+				'Employee-custom_service_interruptions',
+				'Employee-custom_social_security_number',
+				'Employee-custom_subunit',
+				'Employee-custom_termination_date',
+				'Employee-custom_termination_letter_number',
+				'Employee-custom_third_name',
+				'Employee-custom_total_length_of_service',
+				'Employee-custom_total_suspension_duration',
+				'Employee-custom_transfer_date_to_institution',
+				'Employee-custom_weight'
+			]
+		]
+	]}, 
+    {"dt": "Property Setter", "filters": [
+			[
+				"name", "in", [
+					'Employee-branch-label',
+					'Employee-contact_details-hidden',
+					'Employee-date_of_joining-read_only',
+					'Employee-designation-label',
+					'Employee-emergency_contact_details-label',
+					'Employee-emergency_phone_number-label',
+					'Employee-employment_details-label',
+					'Employee-employment_type-in_standard_filter',
+					'Employee-employment_type-label',
+					'Employee-exit-hidden',
+					'Employee-main-field_order',
+					'Employee-middle_name-label',
+					'Employee-person_to_be_contacted-label'
+					]
+			]
+		]},
+]

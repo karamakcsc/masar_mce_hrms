@@ -1,0 +1,134 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:subunit_name",
+ "creation": "2026-10-21 11:04:35.848612",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_nbkl",
+  "subunit_name",
+  "parent_subunit",
+  "column_break_uedh",
+  "disabled",
+  "is_group",
+  "rgt",
+  "lft",
+  "old_parent",
+  "section_break_jhum",
+  "description"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_nbkl",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "lft",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Left",
+   "no_copy": 1,
+   "print_hide": 1,
+   "read_only": 1,
+   "report_hide": 1
+  },
+  {
+   "fieldname": "rgt",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Right",
+   "no_copy": 1,
+   "print_hide": 1,
+   "read_only": 1,
+   "report_hide": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "in_standard_filter": 1,
+   "label": "Is Group"
+  },
+  {
+   "fieldname": "old_parent",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "ignore_user_permissions": 1,
+   "label": "Old Parent",
+   "no_copy": 1,
+   "options": "Subunit",
+   "print_hide": 1,
+   "report_hide": 1
+  },
+  {
+   "fieldname": "parent_subunit",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Parent Subunit",
+   "options": "Subunit"
+  },
+  {
+   "fieldname": "column_break_uedh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "subunit_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Subunit Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Disabled"
+  },
+  {
+   "fieldname": "section_break_jhum",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_tree": 1,
+ "links": [],
+ "modified": "2026-10-21 11:15:48.649531",
+ "modified_by": "Administrator",
+ "module": "Masar MCE HRMS",
+ "name": "Subunit",
+ "naming_rule": "By fieldname",
+ "nsm_parent_field": "parent_subunit",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
